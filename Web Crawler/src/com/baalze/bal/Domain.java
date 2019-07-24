@@ -24,6 +24,7 @@ public class Domain {
         this.created = created;
     }
 
+
     public String getDomainHash() {
         return domainHash;
     }
@@ -42,6 +43,14 @@ public class Domain {
 
     public Timestamp getCreated() {
         return created;
+    }
+
+    public Domain(String domainUrl) throws Exception {
+        this.domainHash = Hasher.toSha256(domainUrl);
+        this.domainUrl = domainUrl;
+        this.activated = true;
+        this.modified = CommonBal.getTimestamp();
+        this.created = CommonBal.getTimestamp();
     }
 
 

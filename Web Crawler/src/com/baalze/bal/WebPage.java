@@ -13,15 +13,33 @@ public class WebPage {
     private String webPageHash;
     private int anchorParseStatus;
     private int emailParseStatus;
-
     private Document document;
 
-    /* General constructor for crawling */
-    public WebPage(Anchor anchor) {
-        this.anchor = anchor;
+    public int getAnchorParseStatus() {
+        return anchorParseStatus;
     }
 
-    private void loadDocumentFromWeb(){
+    public String getWebPageHash() {
+        return webPageHash;
+    }
+
+    public int getEmailParseStatus() {
+        return emailParseStatus;
+    }
+
+    public Document getDocument() {
+        return document;
+    }
+
+    /* General constructor for crawling */
+    public WebPage(Anchor anchor) throws Exception {
+        this.anchor = anchor;
+        this.webPageHash = Hasher.toSha256(anchor.getAnchorHash() + CommonBal.getTimestamp().toString());
+        this.anchorParseStatus = 0;
+        this.emailParseStatus = 0;
+    }
+
+    public void loadDocumentFromWeb(){
         try {
             document = Jsoup.connect(anchor.getAnchorUrl()).get();
 
